@@ -1,0 +1,5 @@
+id: simple
+resources:
+  web:
+    hosting: Cloud Functions
+    runtime: Node.js 14

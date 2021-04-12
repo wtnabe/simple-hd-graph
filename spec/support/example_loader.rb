@@ -14,12 +14,4 @@ module ExampleLoader
       raise ExampleNotFound.new name
     end    
   end
-
-  #
-  # @param name [String]
-  # @return Hash
-  #
-  def load_example(name)
-    YAML.load(read_example(name), symbolize_names: true)
-  end
 end
