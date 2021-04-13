@@ -19,8 +19,8 @@ EOD
 
   before {
     context = SimpleHdGraph::ContextNode.new.load(testing_context)
-    @node = SimpleHdGraph::ResourceNode.new(context)
-    @node.load(testing_resource)
+    @node = SimpleHdGraph::ResourceNode.new
+    @node.load_with_context(context, testing_resource)
   }
 
   describe '#alias' do

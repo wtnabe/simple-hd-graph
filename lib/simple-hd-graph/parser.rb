@@ -24,12 +24,14 @@ module SimpleHdGraph
             context.load({ id: value })
           elsif reserved_keywords.include?(key)
           else
-            resources << { key => value }
+            resources << value
           end
         }
 
-        resources.map {
-          context << ResourceNode.new({ id: context.id })
+        resources.map { |resource|
+          rn = ResourceNode.new
+          rn.load_with_context({ id: context.id }, resource)
+          context << rn
         }
         contexts << context
       end

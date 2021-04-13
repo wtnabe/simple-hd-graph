@@ -1,3 +1,5 @@
+require 'dry/inflector'
+
 module SimpleHdGraph
   class Node
     class RequiredFieldNotFilled < StandardError; end
@@ -11,12 +13,19 @@ module SimpleHdGraph
       end
     end
 
+    def initialize
+      @inflector = Dry::Inflector.new
+    end
+
     #
     # @param struct [Hash]
     #
+    # :reek:TooManyStatements
     def load(struct)
-      required_fields = if self.class.instance_variables.grep(':@required_fields').size > 0
-                          self.class.instance_variable_get('@required_fields')
+      klass = self.class
+
+      required_fields = if klass.instance_variables.grep(':@required_fields').size > 0
+                          klass.instance_variable_get('@required_fields')
                         else
                           nil
                         end
@@ -34,6 +43,14 @@ module SimpleHdGraph
       end
 
       @content = struct if filled
+    end
+
+    #
+    # @param str [String]
+    # @return [String]
+    #
+    def camelize(str)
+      @inflector.camelize(@inflector.underscore(str))
     end
   end
 end

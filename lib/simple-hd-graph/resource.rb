@@ -1,10 +1,12 @@
-require 'dry/inflector'
-
 module SimpleHdGraph
   class ResourceNode < Node
-    def initialize(context)
+    #
+    # @param context [Object]
+    # @param struct [Hash]
+    #
+    def load_with_context(context, struct)
       @context = context
-      @inflector = Dry::Inflector.new
+      load(struct)
     end
 
     #
@@ -28,14 +30,6 @@ module SimpleHdGraph
     #
     def context
       @context[:id].freeze
-    end
-
-    #
-    # @param str [String]
-    # @return [String]
-    #
-    def camelize(str)
-      @inflector.camelize(@inflector.underscore(str))
     end
   end
 end
