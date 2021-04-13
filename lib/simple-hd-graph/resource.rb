@@ -31,5 +31,12 @@ module SimpleHdGraph
     def context
       @context[:id].freeze
     end
+
+    #
+    # @return [Hash]
+    #
+    def content
+      @content.values.first
+    end
   end
 end
