@@ -5,12 +5,23 @@ describe SimpleHdGraph::ContextNode do
     @node = SimpleHdGraph::ContextNode.new
   }
 
-  describe '#id' do
-    it {
-      @node.load({ id: 'foo' })
-      assert {
-        @node.id == 'foo'
+  describe '#alias' do
+    describe 'small letter only' do
+      it {
+        @node.load({ id: 'foo' })
+        assert {
+          @node.id == 'foo'
+        }
       }
-    }
+    end
+
+    describe 'has white space' do
+      it {
+        @node.load({ id: 'foo bar' })
+        assert {
+          @node.id == 'fooBar'
+        }
+      }
+    end
   end
 end

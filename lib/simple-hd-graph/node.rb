@@ -3,7 +3,7 @@ require 'dry/inflector'
 module SimpleHdGraph
   class Node
     class RequiredFieldNotFilled < StandardError; end
-    
+
     class << self
       #
       # @param names [Array]
@@ -50,7 +50,7 @@ module SimpleHdGraph
     # @return [String]
     #
     def camelize(str)
-      @inflector.camelize(@inflector.underscore(str))
+      @inflector.camelize(@inflector.underscore(str.gsub(/ /, '_')))
     end
   end
 end

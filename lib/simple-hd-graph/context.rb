@@ -7,8 +7,17 @@ module SimpleHdGraph
     #
     # @return [String]
     #
-    def id
+    def alias
       @content[:id]
+    end
+
+    #
+    # @return [String]
+    #
+    def id
+      id = camelize(self.alias)
+      id[0] = id[0].downcase
+      id
     end
 
     def <<(resource)
