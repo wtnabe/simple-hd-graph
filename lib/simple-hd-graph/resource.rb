@@ -36,7 +36,16 @@ module SimpleHdGraph
     # @return [Hash]
     #
     def content
-      @content.values.first
+      @content.values.first.select { |key, value|
+        key != 'has'
+      }
+    end
+
+    #
+    # @return [Array]
+    #
+    def has
+      @content.values.first['has']
     end
   end
 end

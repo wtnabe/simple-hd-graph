@@ -1,0 +1,16 @@
+# complex example
+---
+id: example1
+resources:
+  web:
+    hosting: Heroku
+    runtime: Ruby 2.5
+    has:
+      - admin
+      - storage
+  admin:
+    hosting: Google Spreadsheet
+    runtime: Google Apps Script
+  storage:
+    hosting: AWS S3
+    note:
