@@ -1,0 +1,9 @@
+#! /usr/bin/env ruby
+
+$LOAD_PATH.unshift File.join(__dir__, '../lib')
+require 'bundler/setup'
+require 'simple-hd-graph'
+
+Version = SimpleHdGraph::VERSION
+cmd = SimpleHdGraph::Command.new(ARGV)
+cmd.run
