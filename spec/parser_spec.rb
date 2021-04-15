@@ -35,5 +35,20 @@ describe SimpleHdGraph::Parser do
         }
       end
     end
+
+    describe 'complex' do
+      before {
+        @nodes = parser.parse(read_example(:complex))
+      }
+
+      it 'relation' do
+        assert {
+          @nodes.first.relation == [
+            { 'example1Web' => 'example1Admin' },
+            { 'example1Web' => 'example1Storage' }
+          ]
+        }
+      end
+    end
   end
 end

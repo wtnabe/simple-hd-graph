@@ -23,20 +23,30 @@ module SimpleHdGraph
             context = ContextNode.new
             context.load({ id: value })
           elsif reserved_keywords.include?(key)
-          else
-            resources << value
+          elsif key == 'resources'
+            resources = value
           end
         }
 
-        resources.map { |resource|
+        resources.each { |key, resource|
           rn = ResourceNode.new
-          rn.load_with_context({ id: context.id }, resource)
+          rn.load_with_context({ id: context.id }, { key => resource })
           context << rn
         }
         contexts << context
       end
+      refill_relation(contexts)
 
       contexts
+    end
+
+    #
+    # @param contexts [Array]
+    #
+    def refill_relation(contexts)
+      contexts.each {|context|
+        context.refill_relation
+      }
     end
 
     #
