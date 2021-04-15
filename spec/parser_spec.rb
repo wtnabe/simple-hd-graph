@@ -41,9 +41,9 @@ describe SimpleHdGraph::Parser do
         @nodes = parser.parse(read_example(:complex))
       }
 
-      it 'relation' do
+      it 'relations' do
         assert {
-          @nodes.first.relation == [
+          @nodes.first.relations == [
             { 'example1Web' => 'example1Admin' },
             { 'example1Web' => 'example1Storage' }
           ]

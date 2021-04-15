@@ -2,7 +2,7 @@ module SimpleHdGraph
   class ContextNode < Node
     required :id
 
-    attr_reader :resources, :relation
+    attr_reader :resources, :relations
 
     #
     # @return [String]
@@ -30,12 +30,12 @@ module SimpleHdGraph
     #
     # :reek:NestedIterators
     def refill_relation
-      @relation ||= []
+      @relations ||= []
       @resources.each { |resource|
         dependencies = resource.has
         if dependencies
           dependencies.each { |dependency|
-            @relation << { resource.id => @resource_dict[dependency] }
+            @relations << { resource.id => @resource_dict[dependency] }
           }
         end
       }
