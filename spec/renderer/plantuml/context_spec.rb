@@ -7,12 +7,24 @@ describe SimpleHdGraph::Renderer::PlantUML::Context do
   let(:renderer) { SimpleHdGraph::Renderer::PlantUML::Context.new }
 
   describe '#render' do
-    before {
-      @nodes = parser.parse(read_example(:simple))
-    }
+    describe 'simple' do
+      before {
+        @nodes = parser.parse(read_example(:simple))
+      }
 
-    it {
-      puts renderer.render(@nodes.first)
-    }
+      it {
+        puts renderer.render(@nodes.first)
+      }
+    end
+
+    describe 'complex' do
+      before {
+        @nodes = parser.parse(read_example(:complex))
+      }
+
+      it {
+        puts renderer.render(@nodes.first)
+      }
+    end
   end
 end
