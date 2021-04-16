@@ -22,6 +22,49 @@ Or install it yourself as:
 
     $ simple-hd-graph -f FILE
 
+## Example
+
+input
+
+```yaml
+id: example1
+resources:
+  web:
+    hosting: Heroku
+    runtime: Ruby 2.5
+    has:
+      - admin
+      - storage
+  admin:
+    hosting: Google Spreadsheet
+    runtime: Google Apps Script
+  storage:
+    hosting: AWS S3
+    region: ap-north-east1
+```
+
+output
+
+```plantuml
+rectangle "example1" as example1 {
+  object "web" as example1Web {
+    hosting: Heroku
+    runtime: Ruby 2.5
+  }
+  object "admin" as example1Admin {
+    hosting: Google Spreadsheet
+    runtime: Google Apps Script
+  }
+  object "storage" as example1Storage {
+    hosting: AWS S3
+    region: ap-north-east1
+  }
+
+  example1Web -d-|> example1Admin
+  example1Web -d-|> example1Storage
+}
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
