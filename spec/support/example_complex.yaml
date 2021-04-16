@@ -13,4 +13,4 @@ resources:
     runtime: Google Apps Script
   storage:
     hosting: AWS S3
-    note:
+    region: ap-northeast1
