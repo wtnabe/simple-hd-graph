@@ -5,5 +5,5 @@ require 'bundler/setup'
 require 'simple-hd-graph'
 
 Version = SimpleHdGraph::VERSION
-cmd = SimpleHdGraph::Command.new(ARGV)
-cmd.run
+cmd = SimpleHdGraph::Command.new
+cmd.run(ARGV)
