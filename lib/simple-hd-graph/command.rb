@@ -7,6 +7,18 @@ module SimpleHdGraph
 
   class Command
     #
+    # @param parser [Parser]
+    # @param reader [Reader]
+    # @param renderer [Renderer]
+    #
+    def initialize(parser: Parser.new, reader: Reader.new, renderer: Renderer::PlantUML::Context.new)
+      @parser = parser
+      @reader = reader
+      @renderer = renderer
+    end
+    attr_reader :parser, :reader, :renderer
+
+    #
     # @param argv [Array]
     #
     def run(argv)
@@ -24,17 +36,17 @@ module SimpleHdGraph
     end
 
     #
-    # @param parser [Parser]
-    # @param reader [Reader]
-    # @param renderer [Renderer]
+    # @return [String]
     #
-    def start(parser: Parser.new, reader: Reader.new, renderer: Renderer::PlantUML::Context.new)
-      stream = if (@dir)
-                 reader.read_dir(@dir)
-               else
-                 reader.read_file(@file)
-               end
+    def stream
+      if (@dir)
+        reader.read_dir(@dir)
+      else
+        reader.read_file(@file)
+      end
+    end
 
+    def start
       nodes = parser.parse(stream)
 
       puts nodes.map { |node|
