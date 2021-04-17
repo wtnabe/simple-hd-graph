@@ -22,9 +22,42 @@ Or install it yourself as:
 
     $ simple-hd-graph -f FILE
 
+or
+
+    $ simple-hd-graph -d DIR
+
+## Format
+
+SimpleHdGraph was designed primarily to describe systems, its constituent resources, and their dependencies.
+
+The two components are as follows:
+
+ * Context
+ * Resource
+
+A single YAML document corresponds to a single context as below:
+
+<pre>
+<b>id</b>: name1
+<b>resources</b>:
+  resource1:
+    note: memo
+    <b>has</b>: resource2
+  resource2:
+    note: very important
+<b>depends</b>:
+ - name2
+</pre>
+
+features:
+
+ * Context can contain mutiple Resources
+ * Resource can use the `has` keyword to indicate that it owns other Resources
+ * Context can use the `depends` keyword to indicate its dependency on other Contexts
+
 ## Example
 
-input
+input ( streams )
 
 ```yaml
 id: example1
@@ -41,6 +74,14 @@ resources:
   storage:
     hosting: AWS S3
     region: ap-north-east1
+---
+id: example 2
+resources:
+  web:
+    hosting: Google AppEngines
+    runtime: Ruby 2.6
+depends:
+  - example1
 ```
 
 output
@@ -63,7 +104,18 @@ rectangle "example1" as example1 {
   example1Web -d-|> example1Admin
   example1Web -d-|> example1Storage
 }
+rectangle "example 2" as example2 {
+  object "web" as example2Web {
+    hosting: Google AppEngines
+    runtime: Ruby 2.6
+  }
+}
+example2 -|> example1
 ```
+
+after plantuml converted
+
+![example output converted by plantuml](example.png)
 
 ## Development
 
@@ -73,4 +125,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/wtnabe/graph.
+Bug reports and pull requests are welcome on GitHub at https://github.com/wtnabe/simple-hd-graph.
