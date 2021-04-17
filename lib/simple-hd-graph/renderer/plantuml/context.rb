@@ -56,7 +56,7 @@ EOD
         # :reek:UtilityFunction
         def render_depends(depending)
           depender, dependee = depending.to_a.first
-          "#{depender} -d-|> #{dependee}"
+          "#{depender} -|> #{dependee}"
         end
       end
     end
