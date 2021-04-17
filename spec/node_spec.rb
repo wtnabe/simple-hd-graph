@@ -46,13 +46,9 @@ describe SimpleHdGraph::Node do
 
       describe 'empty' do
         it 'invalid' do
-          assert {
-            begin
-              @node.load({})
-            rescue SimpleHdGraph::Node::RequiredFieldNotFilled => e
-              e.message == 'name'
-            end
-          }
+          assert_raises @node.class::RequiredFieldNotFilled do
+            @node.load({})
+          end
         end
       end
     end

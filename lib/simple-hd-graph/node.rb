@@ -24,7 +24,7 @@ module SimpleHdGraph
     def load(struct)
       klass = self.class
 
-      required_fields = if klass.instance_variables.grep(':@required_fields').size > 0
+      required_fields = if klass.instance_variables.grep(/@required_fields/).size > 0
                           klass.instance_variable_get('@required_fields')
                         else
                           nil
