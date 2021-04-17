@@ -6,6 +6,10 @@ module SimpleHdGraph
   #
   # :reek:InstanceVaariableAssumption
   class Parser
+    KEYWORD_ID        ||= 'id'.freeze
+    KEYWORD_RESOURCES ||= 'resources'.freeze
+    KEYWORD_DEPENDS   ||= 'depends'.freeze
+
     #
     # @param document [String]
     #
@@ -17,29 +21,38 @@ module SimpleHdGraph
         next unless node
 
         context   = nil
-        resources = []
+        resources = nil
 
-        # :reek:NestedIterators
         node.each_pair { |key, value|
-          if key == 'id'
+          case key
+          when KEYWORD_ID
             context = ContextNode.new
             context.load({ id: value })
-          elsif reserved_keywords.include?(key)
-          elsif key == 'resources'
+          when KEYWORD_DEPENDS
+          when KEYWORD_RESOURCES
             resources = value
           end
         }
 
-        resources.each { |key, resource|
-          rn = ResourceNode.new
-          rn.load_with_context({ id: context.id }, { key => resource })
-          context << rn
-        }
+        pack_resources_into_context(resources, context) if resources
+
         contexts << context
       end
       refill_relation(contexts)
 
       contexts
+    end
+
+    #
+    # @param resources [Array]
+    # @param context [ContextNode]
+    #
+    def pack_resources_into_context(resources, context)
+      resources.each { |key, resource|
+        rn = ResourceNode.new
+        rn.load_with_context({ id: context.id }, { key => resource })
+        context << rn
+      }
     end
 
     #
@@ -49,13 +62,6 @@ module SimpleHdGraph
       contexts.each {|context|
         context.refill_relation
       }
-    end
-
-    #
-    # @return [Array]
-    #
-    def reserved_keywords
-      [:depends]
     end
   end
 end
