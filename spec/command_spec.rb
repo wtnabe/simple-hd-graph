@@ -23,5 +23,23 @@ describe SimpleHdGraph::Command do
         }
       end
     end
+
+    describe 'dir' do
+      describe 'exists' do
+        it {
+          assert {
+            command.parse(['-d', File.join(__dir__, 'support')])
+          }
+        }
+      end
+
+      describe 'not exist' do
+        it {
+          assert_raises SimpleHdGraph::DirectoryNotExist do
+            command.parse(['-d', 'notexist'])
+          end
+        }
+      end
+    end
   end
 end

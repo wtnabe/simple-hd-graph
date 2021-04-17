@@ -14,6 +14,8 @@ module SimpleHdGraph
       contexts = []
 
       YAML.load_stream(document) do |node|
+        next unless node
+
         context   = nil
         resources = []
 
