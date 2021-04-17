@@ -1,0 +1,7 @@
+id: example 2
+resources:
+  web:
+    hosting: Google AppEngines
+    runtime: Ruby 2.6
+depends:
+  - example1

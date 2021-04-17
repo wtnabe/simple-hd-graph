@@ -50,5 +50,22 @@ describe SimpleHdGraph::Parser do
         }
       end
     end
+
+    describe 'depends' do
+      before {
+        @nodes = parser.parse(
+          [
+            read_example(:complex),
+            read_example(:depending)
+          ].join("---\n")
+        )
+      }
+
+      it {
+        assert {
+          @nodes.map { |node| node.depends } == [nil, [{'example2' => 'example1'}]]
+        }
+      }
+    end
   end
 end

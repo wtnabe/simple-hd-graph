@@ -13,7 +13,9 @@ describe SimpleHdGraph::Renderer::PlantUML::Context do
       }
 
       it {
-        puts renderer.render(@nodes.first)
+        assert {
+          renderer.render(@nodes.first)
+        }
       }
     end
 
@@ -23,7 +25,28 @@ describe SimpleHdGraph::Renderer::PlantUML::Context do
       }
 
       it {
-        puts renderer.render(@nodes.first)
+        assert {
+          renderer.render(@nodes.first)
+        }
+      }
+    end
+
+    describe 'depends' do
+      before {
+        @nodes = parser.parse(
+          [
+            read_example(:complex),
+            read_example(:depending)
+          ].join("---\n")
+        )
+      }
+
+      it {
+        assert {
+          @nodes.map { |node|
+            renderer.render(node)
+          }
+        }
       }
     end
   end

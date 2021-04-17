@@ -22,6 +22,7 @@ module SimpleHdGraph
 
         context   = nil
         resources = nil
+        depends   = nil
 
         node.each_pair { |key, value|
           case key
@@ -29,18 +30,29 @@ module SimpleHdGraph
             context = ContextNode.new
             context.load({ id: value })
           when KEYWORD_DEPENDS
+            depends = value
           when KEYWORD_RESOURCES
             resources = value
           end
         }
 
+        pack_depends_into_context(depends, context) if depends
         pack_resources_into_context(resources, context) if resources
 
         contexts << context
       end
       refill_relation(contexts)
+      refill_depends(contexts)
 
-      contexts
+      contexts.map { |context| context.freeze }.freeze
+    end
+
+    #
+    # @param depends [Array]
+    # @param context [ContextNode]
+    #
+    def pack_depends_into_context(depends, context)
+      context.set_depends depends
     end
 
     #
@@ -61,6 +73,22 @@ module SimpleHdGraph
     def refill_relation(contexts)
       contexts.each {|context|
         context.refill_relation
+      }
+    end
+
+    #
+    # @param context [Array]
+    #
+    def refill_depends(contexts)
+      contexts.map { |context|
+        if context.depends
+          regularized = context.depends.map { |dependee|
+            { context.id => dependee }
+          }
+          context.set_depends regularized
+        else
+          context.set_depends []
+        end
       }
     end
   end

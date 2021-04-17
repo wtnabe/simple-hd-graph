@@ -2,7 +2,7 @@ module SimpleHdGraph
   class ContextNode < Node
     required :id
 
-    attr_reader :resources, :relations
+    attr_reader :resources, :relations, :depends # Array
 
     #
     # @return [String]
@@ -20,6 +20,9 @@ module SimpleHdGraph
       id
     end
 
+    #
+    # @param resource [ResourceNode]
+    #
     def <<(resource)
       @resources ||= []
       @resource_dict ||= {}
@@ -28,8 +31,15 @@ module SimpleHdGraph
     end
 
     #
-    # :reek:NestedIterators
+    # @param depends [Array]
+    #
+    def set_depends(depends)
+      @depends = depends
+    end
+
+    # :reek:NestedIterators, :reek:TooManyStatements
     def refill_relation
+      @resource  ||= []
       @relations ||= []
       @resources.each { |resource|
         dependencies = resource.has
