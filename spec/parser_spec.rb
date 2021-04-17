@@ -63,7 +63,7 @@ describe SimpleHdGraph::Parser do
 
       it {
         assert {
-          @nodes.map { |node| node.depends } == [nil, [{'example2' => 'example1'}]]
+          @nodes.map { |node| node.depends } == [[], [{'example2' => 'example1'}]]
         }
       }
     end
