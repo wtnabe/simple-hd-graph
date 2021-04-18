@@ -9,12 +9,12 @@ module SimpleHdGraph
     #
     # @param parser [Parser]
     # @param reader [Reader]
-    # @param renderer [Renderer]
+    # @param renderer [Symbol]
     #
-    def initialize(parser: Parser.new, reader: Reader.new, renderer: Renderer::PlantUML::Context.new)
+    def initialize(parser: Parser.new, reader: Reader.new, renderer: :plantuml)
       @parser = parser
       @reader = reader
-      @renderer = renderer
+      @renderer = SimpleHdGraph::Renderer.method(renderer.to_s)
     end
     attr_reader :parser, :reader, :renderer
 
@@ -49,9 +49,7 @@ module SimpleHdGraph
     def start
       nodes = parser.parse(stream)
 
-      puts nodes.map { |node|
-        renderer.render(node)
-      }.join
+      @renderer.call(nodes)
     end
 
     #
@@ -72,6 +70,13 @@ module SimpleHdGraph
             @file = value
           else
             raise FileNotExist, value
+          end
+        }
+        opt.on('-r RENDERER', '--renderer', 'renderer') { |value|
+          begin
+            @renderer = SimpleHdGraph::Renderer.method(value)
+          rescue NameError
+            STDERR.puts "[Warining] renderer `#{value}` not found. falling back to :plantuml"
           end
         }
       end
