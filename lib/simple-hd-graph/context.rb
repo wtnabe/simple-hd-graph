@@ -1,3 +1,5 @@
+require 'simple-hd-graph/node'
+
 module SimpleHdGraph
   class ContextNode < Node
     required :id

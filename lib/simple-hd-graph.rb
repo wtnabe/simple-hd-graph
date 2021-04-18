@@ -4,5 +4,5 @@ module SimpleHdGraph
 end
 
 Dir.glob(__dir__ + '/simple-hd-graph/**/*.rb').each { |f|
-  require_relative f.sub(/\.rb\z/, '')
+  require f.sub(/\.rb\z/, '')
 }
