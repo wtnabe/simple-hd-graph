@@ -4,4 +4,4 @@ resources:
     hosting: Google AppEngines
     runtime: Ruby 2.6
 depends:
-  - example1
+  - example,1

@@ -13,6 +13,8 @@ module SimpleHdGraph
       end
     end
 
+    CAMELIZE_SEPARATOR = ' ,.、。'
+
     def initialize
       @inflector = Dry::Inflector.new
     end
@@ -50,7 +52,7 @@ module SimpleHdGraph
     # @return [String]
     #
     def camelize(str)
-      @inflector.camelize(@inflector.underscore(str.gsub(/ /, '_')))
+      @inflector.camelize(@inflector.underscore(str.gsub(/[#{CAMELIZE_SEPARATOR}]/, '_')))
     end
   end
 end

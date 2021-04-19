@@ -1,6 +1,6 @@
 # complex example
 ---
-id: example1
+id: example,1
 resources:
   web:
     hosting: Heroku
