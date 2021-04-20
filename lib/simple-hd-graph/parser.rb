@@ -83,7 +83,13 @@ module SimpleHdGraph
       contexts.map { |context|
         if context.depends
           regularized = context.depends.map { |dependee|
-            { context.id => contexts.select { |c| c.alias == dependee }.first.id }
+            d = contexts.select { |c|
+              c.alias == dependee
+            }.first
+
+            {
+              context.id => d ? d.id : dependee
+            }
           }
           context.set_depends regularized
         else
