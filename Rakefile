@@ -8,9 +8,11 @@ Rake::TestTask.new(:spec) do |t|
   t.test_files = FileList["spec/**/*_spec.rb"]
 end
 
+require "standard/rake"
+
 YARD::Rake::YardocTask.new do |t|
   t.files = ["lib/**/*.rb"]
   t.options = ["--any", "--extra", "--opts"]
 end
 
-task :default => :spec
+task default: :spec
