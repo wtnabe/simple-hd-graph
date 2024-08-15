@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe SimpleHdGraph::Renderer::PlantUML::Context do
   include ExampleLoader
@@ -6,8 +6,8 @@ describe SimpleHdGraph::Renderer::PlantUML::Context do
   let(:parser) { SimpleHdGraph::Parser.new }
   let(:renderer) { SimpleHdGraph::Renderer::PlantUML::Context.new }
 
-  describe '#render' do
-    describe 'simple' do
+  describe "#render" do
+    describe "simple" do
       before {
         @nodes = parser.parse(read_example(:simple))
       }
@@ -19,7 +19,7 @@ describe SimpleHdGraph::Renderer::PlantUML::Context do
       }
     end
 
-    describe 'complex' do
+    describe "complex" do
       before {
         @nodes = parser.parse(read_example(:complex))
       }
@@ -31,7 +31,7 @@ describe SimpleHdGraph::Renderer::PlantUML::Context do
       }
     end
 
-    describe 'depends' do
+    describe "depends" do
       before {
         @nodes = parser.parse(
           [

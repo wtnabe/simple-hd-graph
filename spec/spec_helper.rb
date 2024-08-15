@@ -7,8 +7,8 @@ require "minitest-power_assert"
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-Dir.glob(__dir__ + '/support/**/*.rb').select {|f|
+Dir.glob(__dir__ + "/support/**/*.rb").select { |f|
   f !~ /_(spec|test)\.rb/
-}.each {|f|
+}.each { |f|
   require f
 }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe SimpleHdGraph::ResourceNode do
   include ExampleLoader
@@ -7,18 +7,18 @@ describe SimpleHdGraph::ResourceNode do
 
   # @return [Hash]
   def testing_context
-    YAML.load(<<EOD, symbolize_names: true)
-id: context
-EOD
+    YAML.safe_load(<<~EOD, symbolize_names: true)
+      id: context
+    EOD
   end
 
   # @return [Hash]
   def testing_resource
-    YAML.load(<<EOD, symbolize_names: true)
-web:
-  hosting: Heroku-16
-  runtime: Ruby 2.5
-EOD
+    YAML.safe_load(<<~EOD, symbolize_names: true)
+      web:
+        hosting: Heroku-16
+        runtime: Ruby 2.5
+    EOD
   end
 
   before {
@@ -27,37 +27,37 @@ EOD
     @node.load_with_context(context, testing_resource)
   }
 
-  describe '#alias' do
+  describe "#alias" do
     it {
-      assert { @node.alias == 'web' }
+      assert { @node.alias == "web" }
     }
   end
 
-  describe '#id' do
+  describe "#id" do
     it {
-      assert { @node.id == 'contextWeb' }
+      assert { @node.id == "contextWeb" }
     }
   end
 
-  describe '#content' do
-    it 'does not include `has`' do
+  describe "#content" do
+    it "does not include `has`" do
       nodes = parser.parse(read_example(:complex))
 
       assert {
         nodes.first.resources.first.content == {
-          'hosting' => 'Heroku',
-          'runtime' => 'Ruby 2.5'
+          "hosting" => "Heroku",
+          "runtime" => "Ruby 2.5"
         }
       }
     end
   end
 
-  describe '#has' do
+  describe "#has" do
     it {
       nodes = parser.parse(read_example(:complex))
 
       assert {
-        nodes.first.resources.first.has == ['admin', 'storage']
+        nodes.first.resources.first.has == ["admin", "storage"]
       }
     }
   end
