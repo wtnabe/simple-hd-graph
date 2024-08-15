@@ -1,4 +1,4 @@
-require 'simple-hd-graph/node'
+require "simple-hd-graph/node"
 
 module SimpleHdGraph
   class ResourceNode < Node
@@ -24,7 +24,7 @@ module SimpleHdGraph
     def id
       id = camelize(context)
       id[0] = id[0].downcase
-      [id, camelize(self.alias)].join('').freeze
+      [id, camelize(self.alias)].join("").freeze
     end
 
     #
@@ -39,7 +39,7 @@ module SimpleHdGraph
     #
     def content
       @content.values.first.select { |key, value|
-        key != 'has'
+        key != "has"
       }
     end
 
@@ -47,7 +47,7 @@ module SimpleHdGraph
     # @return [Array]
     #
     def has
-      @content.values.first['has']
+      @content.values.first["has"]
     end
   end
 end

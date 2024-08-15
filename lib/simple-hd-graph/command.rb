@@ -1,9 +1,8 @@
-require 'optparse'
+require "optparse"
 
 module SimpleHdGraph
-  class Error < StandardError; end
   class FileNotExist < Error; end
-  class DirectoryNotExist < Error; end
+  class DirectoryNotExist < Error; end # rubocop:disable Layout/EmptyLineBetweenDefs
 
   class Command
     #
@@ -39,7 +38,7 @@ module SimpleHdGraph
     # @return [String]
     #
     def stream
-      if (@dir)
+      if @dir
         reader.read_dir(@dir)
       else
         reader.read_file(@file)
@@ -58,25 +57,25 @@ module SimpleHdGraph
     # :reek:NestedIterators, :reek:DuplicateMethodCall
     def opts
       OptionParser.new do |opt|
-        opt.on('-d DIR', '--dir', 'dirname') { |value|
+        opt.on("-d DIR", "--dir", "dirname") { |value|
           if File.exist?(value) && File.directory?(value)
             @dir = value
           else
             raise DirectoryNotExist, value
           end
         }
-        opt.on('-f FILE', '--file', 'filename') { |value|
+        opt.on("-f FILE", "--file", "filename") { |value|
           if File.exist?(value) && File.file?(value)
             @file = value
           else
             raise FileNotExist, value
           end
         }
-        opt.on('-r RENDERER', '--renderer', 'renderer') { |value|
+        opt.on("-r RENDERER", "--renderer", "renderer") { |value|
           begin
             @renderer = SimpleHdGraph::Renderer.method(value)
           rescue NameError
-            STDERR.puts "[Warining] renderer `#{value}` not found. falling back to :plantuml"
+            warn "[Warining] renderer `#{value}` not found. falling back to :plantuml"
           end
         }
       end

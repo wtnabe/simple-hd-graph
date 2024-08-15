@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe SimpleHdGraph::Renderer::PlantUML::Resource do
   include ExampleLoader
@@ -6,7 +6,7 @@ describe SimpleHdGraph::Renderer::PlantUML::Resource do
   let(:parser) { SimpleHdGraph::Parser.new }
   let(:renderer) { SimpleHdGraph::Renderer::PlantUML::Resource.new }
 
-  describe '#render' do
+  describe "#render" do
     before {
       @nodes = parser.parse(read_example(:simple))
     }

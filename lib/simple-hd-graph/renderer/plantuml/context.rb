@@ -9,24 +9,33 @@ module SimpleHdGraph
         #
         # @param node [ContextNode]
         #
-        # :reek:FeatureEnvy, :reek:DuplicateMethodCall
         def render(node)
-          resources = node.resources.map { |resource|
-            indent_resource(resource)
-          }.join if node.resources.size > 0
-          relations = node.relations.map { |relation|
-            render_relation(relation)
-          }.join("\n") if node.relations.size > 0
-          depends = node.depends.map { |depending|
-            render_depends(depending)
-          }.join("\n") if node.depends.size > 0
-          (<<-EOD).gsub(/^$\n/, '')
-rectangle \"#{node.alias}\" as #{node.id} {
-#{resources}
-#{relations}
-}
-#{depends}
-EOD
+          resources =
+            if node.resources.size > 0
+              node.resources.map { |resource|
+                indent_resource(resource)
+              }.join
+            end
+          relations =
+            if node.relations.size > 0
+              node.relations.map { |relation|
+                render_relation(relation)
+              }.join("\n")
+            end
+          depends =
+            if node.depends.size > 0
+              node.depends.map { |depending|
+                render_depends(depending)
+              }.join("\n")
+            end
+
+          <<~EOD.gsub(/^$\n/, "")
+            rectangle "#{node.alias}" as #{node.id} {
+            #{resources}
+            #{relations}
+            }
+            #{depends}
+          EOD
         end
 
         #

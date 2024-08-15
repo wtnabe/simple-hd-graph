@@ -1,4 +1,4 @@
-require 'simple-hd-graph/node'
+require "simple-hd-graph/node"
 
 module SimpleHdGraph
   class ContextNode < Node
@@ -39,15 +39,14 @@ module SimpleHdGraph
       @depends = depends
     end
 
-    # :reek:NestedIterators, :reek:TooManyStatements
     def refill_relation
-      @resource  ||= []
+      @resource ||= []
       @relations ||= []
       @resources.each { |resource|
         dependencies = resource.has
-        if dependencies
+        if dependencies.respond_to? :each
           dependencies.each { |dependency|
-            @relations << { resource.id => @resource_dict[dependency] }
+            @relations << {resource.id => @resource_dict[dependency]}
           }
         end
       }

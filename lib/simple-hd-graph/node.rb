@@ -1,8 +1,8 @@
-require 'dry/inflector'
+require "dry/inflector"
 
 module SimpleHdGraph
   class Node
-    class RequiredFieldNotFilled < StandardError; end
+    class RequiredFieldNotFilled < Error; end
 
     class << self
       #
@@ -13,7 +13,7 @@ module SimpleHdGraph
       end
     end
 
-    CAMELIZE_SEPARATOR = ' ,.、。'
+    CAMELIZE_SEPARATOR = /[ ,.、。]/
 
     def initialize
       @inflector = Dry::Inflector.new
@@ -22,27 +22,26 @@ module SimpleHdGraph
     #
     # @param struct [Hash]
     #
-    # :reek:TooManyStatements
     def load(struct)
       klass = self.class
 
-      required_fields = if klass.instance_variables.grep(/@required_fields/).size > 0
-                          klass.instance_variable_get('@required_fields')
-                        else
-                          nil
-                        end
+      required_fields =
+        if klass.instance_variables.grep(/@required_fields/).size > 0
+          klass.instance_variable_get(:@required_fields)
+        end
 
-      if required_fields.is_a? Array
-        filled = required_fields.all? {|field|
-          if struct.has_key? field
-            true
-          else
-            raise RequiredFieldNotFilled, field
-          end
-        }
-      else
-        filled = true
-      end
+      filled =
+        if required_fields.is_a? Array
+          required_fields.all? { |field|
+            if struct.has_key? field
+              true
+            else
+              raise RequiredFieldNotFilled, field
+            end
+          }
+        else
+          true
+        end
 
       @content = struct if filled
     end
@@ -52,7 +51,7 @@ module SimpleHdGraph
     # @return [String]
     #
     def camelize(str)
-      @inflector.camelize(@inflector.underscore(str.gsub(/[#{CAMELIZE_SEPARATOR}]/, '_')))
+      @inflector.camelize(@inflector.underscore(str.gsub(CAMELIZE_SEPARATOR, "_")))
     end
   end
 end

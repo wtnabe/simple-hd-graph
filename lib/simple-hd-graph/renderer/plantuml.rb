@@ -1,4 +1,4 @@
-Dir.glob(File.join(__dir__, '**/*.rb')).each { |f| require f }
+Dir.glob(File.join(__dir__, "plantuml/*.rb")).sort.each { |f| require f }
 
 module SimpleHdGraph
   module Renderer
