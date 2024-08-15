@@ -38,7 +38,7 @@ module SimpleHdGraph
     # @return [Hash]
     #
     def content
-      @content.values.first.select { |key, value|
+      @content.values.first.select { |key, value| # rubocop:disable Style/HashExcept
         key != "has"
       }
     end
