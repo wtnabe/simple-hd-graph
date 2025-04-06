@@ -33,11 +33,7 @@ module SimpleHdGraph
       filled =
         if required_fields.is_a? Array
           required_fields.all? { |field|
-            if struct.has_key? field
-              true
-            else
-              raise RequiredFieldNotFilled, field
-            end
+            struct.has_key?(field) || raise(RequiredFieldNotFilled, field)
           }
         else
           true
